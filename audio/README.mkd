@@ -1,0 +1,27 @@
+`flac2mp3.sh`
+=============
+
+Linux script to convert FLAC files to MP3 audio files.
+------------------------------------------------------
+
+**Usage:**
+
+	+ Background: flac2mp3.sh </dev/null >flac2mp3.log 2>&1 &
+	+ Foreground: flac2mp3.sh 2>&1 | tee flac2mp3.log
+
+**Description:** This script recursively finds all files with `*.flac` suffix
+within the `SOURCEDIR`, it uses `ffmpeg` to convert each file and write the
+`*.mp3` transformation into the `TARGETDIR`. Hidden files are ignored. Target
+folders are created, as needed.  Files are processed in groups of parallel
+background jobs. The group size is set using the `CORES` variable. Set `CORES`
+to the number of CPU core(s) that you have (or less to reserve CPU(s) for other
+work). If the source directories contain a `COVERART` image file, it will be
+embedded in each associated target file.
+
+Set the `SOURCEDIR`, `TARGETDIR`, `COVERART`, `BITRATE` and `CORES` for your needs.
+
+**Legal:**
+
++ *PatroDyne:* Patron Supported Dynamic Executables, <http://patrodyne.org>
++ *MIT license:* <https://raw.githubusercontent.com/patrodyne/patrodyne-scripts/master/LICENSE>
+
