@@ -37,6 +37,7 @@ DONE=false
 find ${BASEDIR}/${SOURCEDIR} -name '*' | until ${DONE}
   do
     read SOURCE || DONE=true
+    # Copy non-FLACs as is, insert FLACs to process in array
     if [[ ! "${SOURCE}" =~ .*/\..* ]]; then
       TARGET=$(echo "${SOURCE}" | sed -e "s#^${BASEDIR}/${SOURCEDIR}#${BASEDIR}/${TARGETDIR}#")
       if [[ -d "${SOURCE}" && ! -e "${TARGET}" ]]; then
@@ -53,6 +54,7 @@ find ${BASEDIR}/${SOURCEDIR} -name '*' | until ${DONE}
       fi
     fi
 
+    # Process multiple FLACs in parallel.
     if [[ "${DONE}" = "true" || $(expr ${COUNTER} % ${CORES}) -eq 0 ]]; then
       while [ ${INDEX} -gt 0 ]
         do
